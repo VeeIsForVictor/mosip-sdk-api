@@ -6,4 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.115.7",
+    "mosip-auth-sdk",
 ]
+
+[tool.uv.sources]
+mosip-auth-sdk = { git = "https://github.com/mosip/ida-auth-sdk.git", rev = "release-0.9.x" }
