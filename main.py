@@ -1,7 +1,10 @@
+from auth import AuthHandler
 from fastapi import FastAPI
 from pydantic import BaseModel
+from mosip_auth_sdk.models import DemographicsModel
 
 server = FastAPI()
+auth = AuthHandler()
 
 
 class DemographicRequestData(BaseModel):
@@ -19,3 +22,10 @@ class DobRequest(DemographicRequestData):
 @server.get("/")
 async def root():
     return {"message": "Hello, world!"}
+
+
+@server.post("/age/")
+async def age(age_data: AgeRequest):
+    demo_data = DemographicsModel(age=str(age_data.age))
+    auth_response = auth.yesno(age_data.uin, demo_data)
+    return {"authStatus": auth_response}
