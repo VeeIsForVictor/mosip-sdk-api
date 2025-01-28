@@ -29,3 +29,10 @@ async def age(age_data: AgeRequest):
     demo_data = DemographicsModel(age=str(age_data.age))
     auth_response = auth.yesno(age_data.uin, demo_data)
     return {"authStatus": auth_response}
+
+
+@server.post("/dob/")
+async def dob(dob_data: DobRequest):
+    demo_data = DemographicsModel(dob=dob_data.dob)
+    auth_response = auth.yesno(dob_data.uin, demo_data)
+    return {"authStatus": auth_response}
