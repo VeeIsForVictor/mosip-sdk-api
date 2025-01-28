@@ -10,4 +10,7 @@ wheels/
 .venv
 
 # VSCode-generated files
-.vscode
+.vscode/
+
+# Authentication Files
+env/
