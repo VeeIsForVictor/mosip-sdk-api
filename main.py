@@ -46,4 +46,5 @@ async def dob(dob_data: DobRequest):
 
 @server.post("/otp/")
 async def otp(otp_data: OTPGenerationRequest):
-    pass
+    txn_id = auth.otp_request(otp_data.uin)
+    return {"txn_id": txn_id}
