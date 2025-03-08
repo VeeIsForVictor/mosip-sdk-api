@@ -23,6 +23,24 @@ class AuthHandler:
         final_response = response_proper.get("authStatus")
         assert final_response is not None
         return final_response
+    
+    def otp_request(self, uid: str) -> str:
+        response: Response = self.authenticator.genotp(
+            individual_id=uid,
+            individual_id_type="UIN",
+            phone=True
+        )
+
+        response_body: dict[str, str] = response.json()
+
+        print(response_body)
+
+        errors = response_body.get("errors") or []
+        if errors:
+            raise Exception(errors)
+        txn_id: str = response_body.get("transactionID")
+        assert txn_id is not None
+        return txn_id
 
 
 def main():
