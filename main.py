@@ -48,3 +48,8 @@ async def dob(dob_data: DobRequest):
 async def otp(otp_data: OTPGenerationRequest):
     txn_id = auth.otp_request(otp_data.uin)
     return {"txn_id": txn_id}
+
+@server.patch("/otp/")
+async def patch_otp(otp_data: OTPVerificationRequest):
+    auth_response = auth.otp_verify(otp_data.uin, otp_data.txn_id, otp_data.otp_value)
+    return {"authStatus": auth_response}

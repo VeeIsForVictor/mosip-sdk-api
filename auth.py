@@ -41,6 +41,22 @@ class AuthHandler:
         txn_id: str = response_body.get("transactionID")
         assert txn_id is not None
         return txn_id
+    
+    def otp_verify(self, uid: str, txn_id: str, otp_value: str) -> bool:
+        response: Response = self.authenticator.kyc(
+            individual_id=uid,
+            individual_id_type="UIN",
+            otp_value=otp_value,
+            consent=True,
+            txn_id=txn_id
+        )
+
+        response_body: dict[str, str] = response.json()
+        response_proper: dict = response_body.get("response")
+        assert response_proper is not None
+        final_response = response_proper.get("kycStatus")
+        assert final_response is not None
+        return final_response
 
 
 def main():
