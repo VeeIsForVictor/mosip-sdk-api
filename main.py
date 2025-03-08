@@ -18,6 +18,13 @@ class AgeRequest(DemographicRequestData):
 class DobRequest(DemographicRequestData):
     dob: str
 
+class OTPGenerationRequest(DemographicRequestData):
+    ...
+
+class OTPVerificationRequest(DemographicRequestData):
+    txn_id: str
+    otp_value: str
+
 
 @server.get("/")
 async def root():
@@ -36,3 +43,7 @@ async def dob(dob_data: DobRequest):
     demo_data = DemographicsModel(dob=dob_data.dob)
     auth_response = auth.yesno(dob_data.uin, demo_data)
     return {"authStatus": auth_response}
+
+@server.post("/otp/")
+async def otp(otp_data: OTPGenerationRequest):
+    pass
