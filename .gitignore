@@ -14,6 +14,7 @@ wheels/
 
 # Authentication Files
 env/
+**/.env
 
 # Logs
 *.log

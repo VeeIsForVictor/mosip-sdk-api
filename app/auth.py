@@ -2,11 +2,16 @@ from requests import Response
 from mosip_auth_sdk import MOSIPAuthenticator
 from mosip_auth_sdk.models import DemographicsModel
 from dynaconf import Dynaconf
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+assert(os.environ["CONFIG_PATH"] is not None)
 
 class AuthHandler:
     def __init__(self):
-        config = Dynaconf(settings_files=["./env/config.toml"])
+        config = Dynaconf(settings_files=[os.environ["CONFIG_PATH"]])
         self.authenticator = MOSIPAuthenticator(config=config)
 
     def yesno(self, uid: str, demographic_data: DemographicsModel) -> bool:
