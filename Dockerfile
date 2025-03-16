@@ -6,7 +6,7 @@ ADD . /code
 
 WORKDIR /code
 
-RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 git -y
 
 RUN uv sync --frozen
 
