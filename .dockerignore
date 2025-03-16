@@ -1,0 +1,6 @@
+/.venv
+/tests
+/dump
+/.ruff_cache
+/__pycache__
+/.github
