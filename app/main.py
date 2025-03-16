@@ -28,7 +28,7 @@ class OTPVerificationRequest(DemographicRequestData):
 
 @server.get("/")
 async def root():
-    return {"message": "Hello, world!"}
+    return {"serverName": "mosip-sdk-api"}
 
 
 @server.post("/age/")
