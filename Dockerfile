@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 git -y
 
 RUN uv sync --frozen
 
-ENV CONFIG_PATH="/run/secrets/config"
+ENV CONFIG_PATH=""
 
 EXPOSE 80
 

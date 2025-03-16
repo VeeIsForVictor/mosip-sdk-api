@@ -8,8 +8,10 @@ import os
 class AuthHandler:
     def __init__(self):
         load_dotenv()
-        assert(os.environ["CONFIG_PATH"] is not None)
-        config = Dynaconf(settings_files=[os.environ["CONFIG_PATH"]])
+        config_path = os.environ["CONFIG_PATH"]
+        assert(config_path is not "")
+        print(config_path)
+        config = Dynaconf(settings_files=[config_path])
         self.authenticator = MOSIPAuthenticator(config=config)
 
     def yesno(self, uid: str, demographic_data: DemographicsModel) -> bool:
