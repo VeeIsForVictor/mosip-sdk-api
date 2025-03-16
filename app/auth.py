@@ -5,12 +5,10 @@ from dynaconf import Dynaconf
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-
-assert(os.environ["CONFIG_PATH"] is not None)
-
 class AuthHandler:
     def __init__(self):
+        load_dotenv()
+        assert(os.environ["CONFIG_PATH"] is not None)
         config = Dynaconf(settings_files=[os.environ["CONFIG_PATH"]])
         self.authenticator = MOSIPAuthenticator(config=config)
 
