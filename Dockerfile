@@ -10,4 +10,4 @@ RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 git -y
 
 RUN uv sync --frozen
 
-CMD ["uv", "run", "fastapi", "run", "main.py", "--port", "80"]
+CMD ["uv", "run", "fastapi", "run", "app/main.py", "--port", "80"]

@@ -6,7 +6,7 @@ from dynaconf import Dynaconf
 
 class AuthHandler:
     def __init__(self):
-        config = Dynaconf(settings_files=["./env/config.toml"])
+        config = Dynaconf(settings_files=["../env/config.toml"])
         self.authenticator = MOSIPAuthenticator(config=config)
 
     def yesno(self, uid: str, demographic_data: DemographicsModel) -> bool:
