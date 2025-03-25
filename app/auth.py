@@ -14,7 +14,7 @@ class AuthHandler:
         config = Dynaconf(settings_files=[config_path])
         self.authenticator = MOSIPAuthenticator(config=config)
 
-    def yesno(self, uid: str, demographic_data: DemographicsModel) -> bool:
+    def yesno(self, uid: str, demographic_data: DemographicsModel) -> tuple[bool, str, str]:
         response: Response = self.authenticator.auth(  # type: ignore
             individual_id=uid,
             individual_id_type="UIN",
@@ -23,10 +23,15 @@ class AuthHandler:
         )
 
         response_body: dict[str, str] = response.json()
+        response_time = response_body.get("responseTime", "")
+        response_errors = response_body.get("errors", [])
+
         response_proper: dict = response_body.get("response")
         assert response_proper is not None
-        final_response = response_proper.get("authStatus")
-        assert final_response is not None
+        response_status = response_proper.get("authStatus")
+        assert response_status is not None
+        final_response = (response_status, response_time, str(response_errors))
+
         return final_response
     
     def otp_request(self, uid: str) -> str:

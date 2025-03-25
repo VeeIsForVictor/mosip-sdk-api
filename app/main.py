@@ -41,8 +41,12 @@ async def age(age_data: AgeRequest):
 @server.post("/dob/")
 async def dob(dob_data: DobRequest):
     demo_data = DemographicsModel(dob=dob_data.dob)
-    auth_response = auth.yesno(dob_data.uin, demo_data)
-    return {"authStatus": auth_response}
+    auth_status, response_time, response_errors = auth.yesno(dob_data.uin, demo_data)
+    return  {
+                "authStatus": auth_status,
+                "responseTime": response_time,
+                "errorMessages": response_errors
+            }
 
 @server.post("/otp/")
 async def otp(otp_data: OTPGenerationRequest):
