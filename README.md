@@ -1,4 +1,4 @@
-# This is a FastAPI-based backend designed to take advantage of the MOSIP Auth SDK
+## A FastAPI-based backend designed as a wrapper for the MOSIP ID Authentication SDK
 
 ## Requirements:
 - `uv` as a Python package manager
@@ -7,6 +7,6 @@
 
 ## To run:
 
-In order to run this project, execute `uv sync`, then use `fastapi dev ./main.py --port [PORT]` to run the webserver and export it to port `PORT`. 
+In order to run this project, execute `uv sync`, then use `uv run fastapi dev ./main.py --port [PORT]` to run the webserver and export it to port `PORT`. 
 
 You may refer to the endpoint `localhost:PORT/docs` for the API docs.
