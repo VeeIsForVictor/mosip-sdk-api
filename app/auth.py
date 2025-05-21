@@ -58,8 +58,10 @@ class AuthHandler:
 
         response_body: dict[str, str] = response.json()
         response_proper: dict = response_body.get("response")
+        print(response_proper)
         assert response_proper is not None
         final_response = response_proper.get("kycStatus")
+        print(final_response)
         assert final_response is not None
         return final_response
 
