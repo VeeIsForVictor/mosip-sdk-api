@@ -51,5 +51,6 @@ async def otp(otp_data: OTPGenerationRequest):
 
 @server.patch("/otp/")
 async def patch_otp(otp_data: OTPVerificationRequest):
+    print(otp_data)
     auth_response = auth.otp_verify(otp_data.uin, otp_data.txn_id, otp_data.otp_value)
     return {"authStatus": auth_response}
