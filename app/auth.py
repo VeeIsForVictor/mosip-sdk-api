@@ -5,11 +5,12 @@ from dynaconf import Dynaconf
 from dotenv import load_dotenv
 import os
 
+
 class AuthHandler:
     def __init__(self):
         load_dotenv()
         config_path = os.environ["CONFIG_PATH"]
-        assert(config_path is not "")
+        assert config_path is not ""
         print(config_path)
         config = Dynaconf(settings_files=[config_path])
         self.authenticator = MOSIPAuthenticator(config=config)
@@ -28,12 +29,10 @@ class AuthHandler:
         final_response = response_proper.get("authStatus")
         assert final_response is not None
         return final_response
-    
+
     def otp_request(self, uid: str) -> str:
         response: Response = self.authenticator.genotp(
-            individual_id=uid,
-            individual_id_type="UIN",
-            phone=True
+            individual_id=uid, individual_id_type="UIN", phone=True
         )
 
         response_body: dict[str, str] = response.json()
@@ -46,14 +45,14 @@ class AuthHandler:
         txn_id: str = response_body.get("transactionID")
         assert txn_id is not None
         return txn_id
-    
+
     def otp_verify(self, uid: str, txn_id: str, otp_value: str) -> bool:
         response: Response = self.authenticator.kyc(
             individual_id=uid,
             individual_id_type="UIN",
             otp_value=otp_value,
             consent=True,
-            txn_id=txn_id
+            txn_id=f"{txn_id:0>10}",
         )
 
         response_body: dict[str, str] = response.json()
