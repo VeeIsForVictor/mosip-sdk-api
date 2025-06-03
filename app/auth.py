@@ -1,3 +1,4 @@
+import time
 from requests import Response
 from mosip_auth_sdk import MOSIPAuthenticator
 from mosip_auth_sdk.models import DemographicsModel
@@ -31,6 +32,8 @@ class AuthHandler:
         return final_response
 
     def otp_request(self, uid: str) -> str:
+        start = time.time()
+
         response: Response = self.authenticator.genotp(
             individual_id=uid, individual_id_type="UIN", phone=True
         )
@@ -44,9 +47,16 @@ class AuthHandler:
             raise Exception(errors)
         txn_id: str = response_body.get("transactionID")
         assert txn_id is not None
+
+        end = time.time()
+        
+        print(f"REQUEST PERFORMANCE: {start - end}")
+
         return txn_id
 
     def otp_verify(self, uid: str, txn_id: str, otp_value: str) -> bool:
+        start = time.time()
+        
         response: Response = self.authenticator.kyc(
             individual_id=uid,
             individual_id_type="UIN",
@@ -62,6 +72,11 @@ class AuthHandler:
         final_response = response_proper.get("kycStatus")
         print(final_response)
         assert final_response is not None
+        
+        end = time.time()
+        
+        print(f"VERIFY PERFORMANCE: {start - end}")
+        
         return final_response
 
 
